@@ -116,4 +116,24 @@ gs = GridSearchCV(estimator=pipe_svc,
                   cv=10,
                   n_jobs=-1)
 scores = cross_val_score(gs, X, y, scoring="accuracy", cv=5)
-# TODO: 190pから
+
+from sklearn.metrics import confusion_matrix
+
+pipe_svc.fit(X_train, y_train)
+y_pred = pipe_svc.predict(X_test)
+confmat = confusion_matrix(y_true=y_test, y_pred=y_pred)
+print(confmat)
+
+fig, ax = plt.subplots(figsize=(2.5, 2.5))
+ax.matshow(confmat, cmap=plt.cm.Blues, alpha=0.3)
+for i in range(confmat.shape[0]):
+
+    for j in range(confmat.shape[1]):
+        ax.text(x=j, y=i,
+                s=confmat[i, j],
+                va='center', ha='center')
+plt.xlabel('predicted label')
+plt.ylabel('true label')
+plt.show()
+
+# last part(confusion matri skip because I already know enough)
